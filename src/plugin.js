@@ -1,7 +1,7 @@
 "use strict";
 
 var clean  = require('clean-css')();
-var logger = require('logmimosa');
+var logger = null;
 
 var _minifyCSS = function( config, options, next ) {
   var hasFiles = options.files && options.files.length > 0;
@@ -30,6 +30,7 @@ var _minifyCSS = function( config, options, next ) {
 
 exports.registration = function ( config, register ) {
   if ( config.isOptimize || config.isMinify ) {
+    logger = config.log;
     var e = config.extensions;
     register( ['add','update','buildExtension', 'buildFile'], 'beforeWrite', _minifyCSS, e.css );
   }

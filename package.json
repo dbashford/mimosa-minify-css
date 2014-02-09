@@ -1,6 +1,6 @@
 {
   "name": "mimosa-minify-css",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "homepage": "http://www.mimosa.io",
   "author": "David Bashford",
   "description": "CSS Minification/Cleaning module for Mimosa browser development workflow tool",
@@ -23,8 +23,7 @@
     "mmodule"
   ],
   "dependencies": {
-    "clean-css": "2.0.2",
-    "logmimosa": "0.6.0"
+    "clean-css": "2.0.8"
   },
   "license": "MIT",
   "engines": {
