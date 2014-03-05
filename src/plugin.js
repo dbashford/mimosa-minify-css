@@ -1,6 +1,6 @@
 "use strict";
 
-var clean  = require('clean-css')();
+var clean  = require("clean-css")();
 var logger = null;
 
 var _minifyCSS = function( config, options, next ) {
@@ -21,7 +21,7 @@ var _minifyCSS = function( config, options, next ) {
       file.outputFileText = clean.minify( text );
     }
 
-    if ( i === options.files.length-1 ) {
+    if ( i === options.files.length - 1 ) {
       next();
     }
 
@@ -32,6 +32,6 @@ exports.registration = function ( config, register ) {
   if ( config.isOptimize || config.isMinify ) {
     logger = config.log;
     var e = config.extensions;
-    register( ['add','update','buildExtension', 'buildFile'], 'beforeWrite', _minifyCSS, e.css );
+    register( ["add","update","buildExtension", "buildFile"], "beforeWrite", _minifyCSS, e.css );
   }
 };
