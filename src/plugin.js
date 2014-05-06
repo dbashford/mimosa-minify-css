@@ -1,44 +1,48 @@
 "use strict";
 
-var Clean  = require( "clean-css" )
-  , logger = null
+var logger = null
   , clean = null;
 
 var _minifyCSS = function( mimosaConfig, options, next ) {
-  var hasFiles = options.files && options.files.length > 0;
-  if ( !hasFiles ) {
-    return next();
-  }
 
-  options.files.forEach( function ( file, i ) {
-    var fileName = file.outputFileName;
-    var text = file.outputFileText;
-    if ( mimosaConfig.minifyCSS.excludeRegex && fileName.match( mimosaConfig.minifyCSS.excludeRegex ) ) {
-      logger.debug( "Not going to minify [[ " + fileName + " ]], it has been excluded with a regex." );
-    } else if ( mimosaConfig.minifyCSS.exclude.indexOf( fileName ) > -1 ) {
-      logger.debug( "Not going to minify [[ " + fileName + " ]], it has been excluded with a string path." );
-    } else {
-      logger.debug( "Running minification on [[ " + fileName + " ]]" );
-      file.outputFileText = clean.minify( text );
-      if ( clean.stats ) {
-        var sizeDiff = clean.stats.originalSize - clean.stats.minifiedSize;
-        if ( sizeDiff ) {
-          var pcnt = Math.round( ( sizeDiff / clean.stats.originalSize  ) * 100 );
-          mimosaConfig.log.info( "Saved [[ " + sizeDiff + " (" + pcnt + "%) ]] characters for file [[ " + file.inputFileName + " ]]");
+  if ( options.files && options.files.length ) {
+
+    if ( !clean ) {
+      var Clean  = require( "clean-css" );
+      clean = Clean( mimosaConfig.minifyCSS.options );
+    }
+
+    options.files.forEach( function ( file, i ) {
+      var fileName = file.outputFileName;
+      var text = file.outputFileText;
+      if ( mimosaConfig.minifyCSS.excludeRegex && fileName.match( mimosaConfig.minifyCSS.excludeRegex ) ) {
+        logger.debug( "Not going to minify [[ " + fileName + " ]], it has been excluded with a regex." );
+      } else if ( mimosaConfig.minifyCSS.exclude.indexOf( fileName ) > -1 ) {
+        logger.debug( "Not going to minify [[ " + fileName + " ]], it has been excluded with a string path." );
+      } else {
+        logger.debug( "Running minification on [[ " + fileName + " ]]" );
+        file.outputFileText = clean.minify( text );
+        if ( clean.stats ) {
+          var sizeDiff = clean.stats.originalSize - clean.stats.minifiedSize;
+          if ( sizeDiff ) {
+            var pcnt = Math.round( ( sizeDiff / clean.stats.originalSize  ) * 100 );
+            mimosaConfig.log.info( "Saved [[ " + sizeDiff + " (" + pcnt + "%) ]] characters for file [[ " + file.inputFileName + " ]]");
+          }
         }
       }
-    }
 
-    if ( i === options.files.length - 1 ) {
-      next();
-    }
+      if ( i === options.files.length - 1 ) {
+        next();
+      }
 
-  });
+    });
+  } else {
+    next();
+  }
 };
 
 exports.registration = function ( mimosaConfig, register ) {
   if ( mimosaConfig.isOptimize || mimosaConfig.isMinify ) {
-    clean = Clean( mimosaConfig.minifyCSS.options );
     logger = mimosaConfig.log;
     var e = mimosaConfig.extensions;
     register( ["add","update","buildExtension", "buildFile"], "beforeWrite", _minifyCSS, e.css );
