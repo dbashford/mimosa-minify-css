@@ -8,8 +8,8 @@ var _minifyCSS = function( mimosaConfig, options, next ) {
   if ( options.files && options.files.length ) {
 
     if ( !clean ) {
-      var Clean  = require( "clean-css" );
-      clean = Clean( mimosaConfig.minifyCSS.options );
+      var cleanCSS  = require( "clean-css" );
+      clean = cleanCSS( mimosaConfig.minifyCSS.options );
     }
 
     options.files.forEach( function ( file, i ) {
