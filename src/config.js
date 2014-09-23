@@ -21,7 +21,7 @@ exports.placeholder = function () {
      "                                # is assumed to already be minified and is ignored by default.\n" +
      "                                # Paths can be relative to the watch.compiledDir, or absolute. \n" +
      "                                # Paths are to compiled files,  so '.css' rather than '.styl'\n" +
-     "    options: {}                 # Options for clean-css package, see list of options here\n" +
+     "    options:                    =# Options for clean-css package, see list of options here\n" +
      "                                # https://github.com/GoalSmashers/clean-css#how-to-use-clean-css-programmatically\n" +
      "      processImport: false      # defaults to not processing (stripping) @import statements";
 
