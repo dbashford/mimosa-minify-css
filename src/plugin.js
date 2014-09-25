@@ -15,18 +15,22 @@ var _minifyCSS = function( mimosaConfig, options, next ) {
     options.files.forEach( function ( file, i ) {
       var fileName = file.outputFileName;
       var text = file.outputFileText;
-      if ( mimosaConfig.minifyCSS.excludeRegex && fileName.match( mimosaConfig.minifyCSS.excludeRegex ) ) {
-        logger.debug( "Not going to minify [[ " + fileName + " ]], it has been excluded with a regex." );
-      } else if ( mimosaConfig.minifyCSS.exclude.indexOf( fileName ) > -1 ) {
-        logger.debug( "Not going to minify [[ " + fileName + " ]], it has been excluded with a string path." );
-      } else {
-        logger.debug( "Running minification on [[ " + fileName + " ]]" );
-        file.outputFileText = clean.minify( text );
-        if ( clean.stats ) {
-          var sizeDiff = clean.stats.originalSize - clean.stats.minifiedSize;
-          if ( sizeDiff ) {
-            var pcnt = Math.round( ( sizeDiff / clean.stats.originalSize  ) * 100 );
-            mimosaConfig.log.info( "Saved [[ " + sizeDiff + " (" + pcnt + "%) ]] characters for file [[ " + file.inputFileName + " ]]");
+      if ( text ) {
+        if ( mimosaConfig.minifyCSS.excludeRegex && fileName.match( mimosaConfig.minifyCSS.excludeRegex ) ) {
+          logger.debug( "Not going to minify [[ " + fileName + " ]], it has been excluded with a regex." );
+        } else if ( mimosaConfig.minifyCSS.exclude.indexOf( fileName ) > -1 ) {
+          logger.debug( "Not going to minify [[ " + fileName + " ]], it has been excluded with a string path." );
+        } else {
+          if ( logger.isDebug() ) {
+            logger.debug( "Running minification on [[ " + fileName + " ]]" );
+          }
+          file.outputFileText = clean.minify( text );
+          if ( clean.stats ) {
+            var sizeDiff = clean.stats.originalSize - clean.stats.minifiedSize;
+            if ( sizeDiff ) {
+              var pcnt = Math.round( ( sizeDiff / clean.stats.originalSize  ) * 100 );
+              mimosaConfig.log.info( "Saved [[ " + sizeDiff + " (" + pcnt + "%) ]] characters for file [[ " + file.inputFileName + " ]]");
+            }
           }
         }
       }
