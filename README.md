@@ -11,17 +11,11 @@ For more information regarding Mimosa, see http://mimosa.io.
 
 # Usage
 
-### Including the module
-
 Add `'minify-css'` to your list of modules.  That's all!  Mimosa will install the module for you when you start `mimosa watch` or `mimosa build`.
-
-### During `-o/--optimize` or `-m/--minify`
-
-When `mimosa watch` or `mimosa build` are executed with the `--optimize` or `--minify` flag, this module will minify any files identified as `.css` right before the output is written.  This includes plain `.css` files but also any files compiled by any of the Mimosa CSS compilers.
 
 # Functionality
 
-mimosa-bower requires a valid `bower.json` at the root of project (in the same directory as `mimosa-config`).
+When `mimosa watch` or `mimosa build` are executed with the `--optimize` or `--minify` flag, this module will minify any files identified as `.css` right before the output is written.  This includes plain `.css` files but also any files compiled by any of the Mimosa CSS compilers.
 
 # Default Config
 
