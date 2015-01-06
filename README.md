@@ -36,6 +36,3 @@ This object is the options passed into CleanCSS when it is created.  For details
 
 #### `minifyCSS.options.processImport` boolean
 This is a default setting for mimosa-minify-css' use of Clean-CSS that prevents `@import` statements from being removed. For details on the option, see the [clean-css page and its list of options](https://github.com/jakubpawlowicz/clean-css#how-to-use-clean-css-programmatically).
-
-#### `minifyCSS.options.debug` boolean
-This is a default setting for mimosa-minify-css' use of Clean-CSS.  It is set to `true` by default. For details on the option, see the [clean-css page and its list of options](https://github.com/jakubpawlowicz/clean-css#how-to-use-clean-css-programmatically).
