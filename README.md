@@ -1,8 +1,6 @@
 mimosa-minify-css
 ===========
 
-# Overview
-
 This is a CSS minification module for the Mimosa build tool. This tool utilizes [clean-css](https://github.com/jakubpawlowicz/clean-css) to perform the minification of CSS assets.
 
 For more information regarding clean-css, see https://github.com/jakubpawlowicz/clean-css.
